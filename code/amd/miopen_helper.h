@@ -7,6 +7,10 @@
 #include <miopen/miopen.h>
 
 #include "hip_helper.h"
+#include "half.hpp"
+//#define float16 half_float::half
+using float16 = half_float::half;
+
 
 void throw_miopen_err(miopenStatus_t status, int line, const char* filename) {
     if (status != miopenStatusSuccess) {
@@ -67,6 +71,9 @@ public:
         miopenDataType_t type;
         if (std::is_same<T, float>::value)
             type = miopenFloat;
+        //xuan for fp16
+        else if (std::is_same<T,float16>::value)
+            type = miopenHalf;
         else
             throw std::runtime_error("Unknown type");
 
@@ -109,6 +116,8 @@ public:
         miopenDataType_t type;
         if (std::is_same<T, float>::value)
             type = miopenFloat;
+        else if (std::is_same<T,float16>::value)
+            type = miopenHalf;
         else
             throw std::runtime_error("Unknown type");
 
@@ -145,6 +154,9 @@ public:
         miopenDataType_t type;
         if (std::is_same<T, float>::value)
             type = miopenFloat;
+        //xuan for fp16
+        else if (std::is_same<T,float16>::value)
+            type = miopenHalf;
         else
             throw std::runtime_error("Unknown type");
 
@@ -180,6 +192,9 @@ public:
         miopenDataType_t type;
         if (std::is_same<T, float>::value)
             type = miopenFloat;
+        //xuan for fp16
+        else if (std::is_same<T,float16>::value)
+            type = miopenHalf;
         else
             throw std::runtime_error("Unknown type");
 
